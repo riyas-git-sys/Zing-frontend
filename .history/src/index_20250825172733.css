@@ -1,0 +1,104 @@
+/* client/src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme variables */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #dfdfe4;
+  --border-color: #3f3f46;
+}
+
+[data-theme="palenight"] {
+  --bg-primary: #292d3e;
+  --bg-secondary: #1c1f2b;
+  --text-primary: #ffffff;
+  --text-secondary: #a6accd;
+  --text-tertiary: #6b7280;
+  --border-color: #3a3f5b;
+}
+
+/* Apply theme colors */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.bg-white {
+  background-color: var(--bg-primary) !important;
+}
+
+.bg-gray-100, .bg-gray-50 {
+  background-color: var(--bg-secondary) !important;
+}
+
+.text-gray-600, .text-gray-500, .text-gray-400, .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+.border, .border-b, .border-t, .border-gray-200, .border-gray-300 {
+  border-color: var(--border-color) !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 767px) {
+  .flex.h-full {
+    flex-direction: column;
+  }
+
+  .h-full {
+    height: 100vh;
+    height: 92dvh; /* New CSS unit for dynamic viewport height */
+  }
+  
+  .w-1\/3 {
+    width: 100%;
+    height: 40%;
+  }
+  
+  .flex-1 {
+    height: 60%;
+  }
+  .keyboard-open .max-w-full {
+    max-width: 90% !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.contacts-list-container {
+  width: 100%;
+  height: 100%;
+}
+
+.contacts-list-container .overflow-y-auto {
+  height: calc(100% - 60px); /* Subtract the height of search input */
+}

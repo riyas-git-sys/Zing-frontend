@@ -1,0 +1,120 @@
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
+
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  mobile: string;
+  token?: string;
+}
+
+interface AuthContextType {
+  user: User | null;
+  loading: boolean;
+  login: (emailOrMobile: string, password: string) => Promise<void>;
+  register: (name: string, email: string, mobile: string, password: string) => Promise<void>;
+  logout: () => void;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const token = localStorage.getItem('chatToken');
+        if (token) {
+          // Set the token in axios headers
+          api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          
+          // Get current user data
+          const { data } = await api.get('/auth/me');
+          setUser(data);
+        }
+      } catch (error) {
+        console.error('Error loading user:', error);
+        // If token is invalid, remove it
+        localStorage.removeItem('chatToken');
+        delete api.defaults.headers.common['Authorization'];
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUser();
+  }, []);
+
+  const login = async (emailOrMobile: string, password: string) => {
+    try {
+      const { data } = await api.post('/auth/login', { emailOrMobile, password });
+      localStorage.setItem('chatToken', data.token);
+      
+      // Set the token in axios headers
+      api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+      
+      // Get user data without the token
+      const userData = { ...data };
+      delete userData.token;
+      
+      setUser(userData);
+      navigate('/');
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Login failed');
+    }
+  };
+
+  const register = async (name: string, email: string, mobile: string, password: string) => {
+    try {
+      const { data } = await api.post('/auth/register', { 
+        name, 
+        email, 
+        mobile, 
+        password 
+      });
+      localStorage.setItem('chatToken', data.token);
+      
+      // Set the token in axios headers
+      api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+      
+      // Get user data without the token
+      const userData = { ...data };
+      delete userData.token;
+      
+      setUser(userData);
+      navigate('/');
+    } catch (error: any) {
+      throw new Error(
+        error.response?.data?.message || 
+        error.response?.data?.errors?.join(', ') || 
+        'Registration failed'
+      );
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('chatToken');
+    delete api.defaults.headers.common['Authorization'];
+    setUser(null);
+    navigate('/login');
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};

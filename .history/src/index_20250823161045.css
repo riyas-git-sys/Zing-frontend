@@ -1,0 +1,54 @@
+/* client/src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mobile responsive adjustments */
+@media (max-width: 767px) {
+  .flex.h-full {
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+  }
+  
+  .w-1\/3 {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+  }
+  
+  .flex-1 {
+    height: 60%;
+  }
+  .keyboard-open .flex-col.h-full {
+    height: 100vh;
+  }
+  
+  .keyboard-open .flex-1.overflow-y-auto {
+    flex: 0.7;
+    max-height: 70vh;
+  }
+  
+  /* Optional: Adjust message container when keyboard is open */
+  .keyboard-open .max-w-full {
+    max-width: 90% !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
