@@ -2,7 +2,7 @@
 
 A modern, responsive chat application built with React that provides real-time messaging capabilities with a sleek, energetic interface.
 
-![Zing Chat Demo](https://zing-chat.vercel.app)
+## Click Here For Demo [Zing Chat Demo](https://zing-chat-rho.vercel.app)
 
 ## ✨ Features
 
