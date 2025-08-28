@@ -1,5 +1,7 @@
 # Zing Chat - Frontend
 
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=30&duration=4000&pause=1000&color=1D2EF7&multiline=true&width=435&lines=Zing+Chat!%F0%9F%92%AB+Exclusive+Application+for+Chatting+%7C+Happy+Zinging%F0%9F%99%8C;Get+in+Touch+With+You+Friends+and+Collageous%F0%9F%92%95)](https://git.io/typing-svg)
+
 A modern, responsive chat application built with React that provides real-time messaging capabilities with a sleek, energetic interface.
 
 ## Click Here For Demo [Zing Chat Demo](https://zing-chat-rho.vercel.app)
